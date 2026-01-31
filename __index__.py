@@ -1,0 +1,1 @@
+"""Basic file to get university mapping into the database."""

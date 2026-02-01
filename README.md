@@ -1,4 +1,4 @@
-# Analysis of Research Publication Volume in Top-Ranked Universities (2000–2020)
+# Analysis of Research Publication Volume in Top-Ranked Universities (2000–2025)
 
 This repository contains code supporting a research paper that investigates trends in research publication output among top-ranked universities over the past two decades. The analysis focuses on three research domains: Medicine, Computer Science, and Business (with a particular emphasis on Computer Science in the third hypothesis).
 

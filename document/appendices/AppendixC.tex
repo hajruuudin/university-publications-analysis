@@ -1,0 +1,119 @@
+\section{MATLAB Graphing Example}
+An example of a MATLAB code snippet used to do analysis and generate graphs can be found here. Below is the snipped used to generate the graphs regarding percentage-difference between yearly values of research papers per university groups.
+\begin{small}
+\begin{verbatim}
+    %% Clear workspace
+clear; clc; close all;
+
+%% Load data
+data = readtable('h2_heatmap_data.csv');
+data.rank_bin = categorical(data.rank_bin);
+
+% Sort to ensure correct year order
+data = sortrows(data, {'rank_bin','publication_year'});
+
+groups = categories(data.rank_bin);
+
+%% Year-over-year growth
+
+growthTable = table();
+
+for g = 1:numel(groups)
+    grp = groups{g};
+    grpData = data(data.rank_bin == grp, :);
+
+    pctGrowth = [NaN; diff(grpData.total_pubs) ./ grpData.total_pubs(1:end-1) * 100];
+
+    temp = table( ...
+        repmat({grp}, height(grpData), 1), ...
+        grpData.publication_year, ...
+        pctGrowth, ...
+        'VariableNames', {'RankGroup','Year','YoY_PercentGrowth'});
+
+    growthTable = [growthTable; temp];
+end
+
+%% Plot: Year-over-year growth
+figure;
+hold on;
+
+cyanPalette = parula(numel(groups)); % cyan-ish color map
+
+for g = 1:numel(groups)
+    grp = groups{g};
+    grpData = growthTable(strcmp(growthTable.RankGroup, grp), :);
+
+    plot(grpData.Year, grpData.YoY_PercentGrowth, ...
+        'LineWidth', 2, ...
+        'Color', cyanPalette(g,:));
+end
+
+xlabel('Year');
+ylabel('Year-over-Year Growth (%)');
+title('Year-over-Year Research Output Growth by University Ranking Group');
+legend(groups, 'Location','bestoutside');
+grid on;
+hold off;
+
+%% Percentage difference vs Top-50
+
+top50 = data(data.rank_bin == '1-50', :);
+diffTable = table();
+
+for g = 1:numel(groups)
+    grp = groups{g};
+    if strcmp(grp, '1-50')
+        continue
+    end
+
+    grpData = data(data.rank_bin == grp, :);
+
+    pctDiff = (grpData.total_pubs - top50.total_pubs) ./ top50.total_pubs * 100;
+
+    temp = table( ...
+        repmat({grp}, height(grpData), 1), ...
+        grpData.publication_year, ...
+        pctDiff, ...
+        'VariableNames', {'RankGroup','Year','PercentDiff_vs_Top50'});
+
+    diffTable = [diffTable; temp];
+end
+
+%% Plot: Percentage difference vs Top-50
+figure;
+hold on;
+
+cmpGroups = unique(diffTable.RankGroup);
+cmpPalette = parula(numel(cmpGroups));
+
+for g = 1:numel(cmpGroups)
+    grp = cmpGroups{g};
+    grpData = diffTable(strcmp(diffTable.RankGroup, grp), :);
+
+    plot(grpData.Year, grpData.PercentDiff_vs_Top50, ...
+        'LineWidth', 2, ...
+        'Color', cmpPalette(g,:));
+end
+
+yline(0, '--k', 'Top-50 baseline');
+
+xlabel('Year');
+ylabel('Difference vs Top-50 (%)');
+title('Percentage Difference in Research Output vs Top-50 Universities');
+legend(cmpGroups, 'Location','bestoutside');
+grid on;
+hold off;
+
+%% ========================================================================
+% EXPORT RESULTS TO EXCEL
+% ========================================================================
+
+outputFile = 'university_ranking_analysis.xlsx';
+
+writetable(growthTable, outputFile, 'Sheet', 'YoY_Growth');
+writetable(diffTable,   outputFile, 'Sheet', 'Vs_Top50');
+
+\end{verbatim}
+\end{small}
+
+A full analysis of the code and the exports of the graphs can be found on this papers GitHub repository: https://github.com/hajruuudin/university-publications-analysis

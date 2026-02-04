@@ -1,0 +1,40 @@
+\section{PostgreSQL Database Structure}
+The DDL statements used to create the tables for this paper are:
+\begin{small}
+\begin{verbatim}
+-- Creating the tables
+CREATE TYPE uni_ranking_group AS ENUM ('TOP100', '151TO500', '500BELOW');
+
+CREATE TABLE IF NOT EXISTS university_index (
+    id SERIAL PRIMARY KEY,
+    the_ranking INT NOT NULL DEFAULT 9999,
+    uni_name VARCHAR(255) NOT NULL DEFAULT 'unnamed',
+    open_alex_id VARCHAR(255) UNIQUE NOT null,
+    ranking_group uni_ranking_group
+);
+
+CREATE TABLE IF NOT EXISTS university_annual_publications (
+    id SERIAL PRIMARY KEY,
+    open_alex_id VARCHAR(255) NOT NULL,
+    publication_year INT NOT NULL,
+    total_medicine_publications INT DEFAULT 0,
+    total_computer_science_publications INT DEFAULT 0,
+    total_business_publications INT DEFAULT 0,
+    
+    CONSTRAINT fk_uni_index 
+        FOREIGN KEY (open_alex_id) 
+        REFERENCES university_index(open_alex_id)
+        ON DELETE CASCADE,
+        
+    CONSTRAINT uq_uni_year UNIQUE (open_alex_id, publication_year)
+);
+
+CREATE TABLE IF NOT EXISTS cs_thematic_trends (
+    id SERIAL PRIMARY KEY,
+    publication_year INT NOT NULL,
+    segment_name VARCHAR(100) NOT NULL,
+    work_count INT DEFAULT 0,
+    CONSTRAINT uq_year_segment UNIQUE (publication_year, segment_name)
+);
+\end{verbatim}
+\end{small}

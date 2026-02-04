@@ -1,0 +1,146 @@
+\section{Results}
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{images/H1_FIG01.png}
+    \caption{Longitudinal fluctuations in the total volume of recognized research publications per academic category.}
+    \label{fig:hypothesis_1a}
+\end{figure*}
+Each hypothesis claim is tested by running queries against the existing dataset in order to receive an accurate representation of the information based on the context of the hypothesis. Results contain graphical representation of the data, as well as statistical analysis and conclusion for additional context and understanding. Results constrained to 2026 were omitted due to the fact that the year has just started, hence deeming the information set as incomplete. Below is an analysis of all three hypothesis claims.
+
+\subsection{Results and Analysis: Hypothesis 1}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{images/H1_FIG02.png}
+    \caption{Longitudinal fluctuations in the total volume of recognized research publications per academic category.}
+    \label{fig:hypothesis_1b}
+\end{figure*}
+
+As Figure-\ref{fig:hypothesis_1a} suggests, we see an increase of total volume of research done in all three of the distinct fields over the past two decades. The graphs themselves can be misleading since they do not contain the same scales in each graph. It is normal to expect medicine to be the dominant field of research, proved further by looking at the statistical analysis of the data. When it comes to Medicine, the smallest value overtime was in 2006, where the number of research papers submitted counted 101639. Meanwhile, the maximum value was 2023 (337736), a roughly 223\% increase. Furthermore, another trend noticeable in medicine is the spike in research published in the events preceding and following the pandemic. This is proved by looking at Figure-\ref{fig:hypothesis_1b}, which showcases the cumulative value of research taking into account all three categories together within the top 100 universities. Within the time period near 2019 there is a large spike in medical research, influenced by the COVID-19 Pandemic. Based on the data given, we can also concur statistical values regarding the growth of medicine over time.
+
+Two statistics that can be used to describe this are the Average Annual Growth Rate (AAGR) and Compound Annual Growth Rate(CAGR). The former is used to describe a general trend in the growth rate year-to-year from the starting value to the ending value. The latter is a more end-to-end approach, where we are interested in the steady projected growth rate from start to finish;
+
+\begin{quote}
+    $\text{Growth}*{n} = \frac{V*{n} - V_{n-1}}{V_{n-1}}$
+\end{quote}
+\begin{quote}
+    $\text{AAGR} = \frac{1}{N} \sum_{i=1}^{N} \text{Growth}*{i}$
+\end{quote}
+\begin{quote}
+    $\text{CAGR} = \left( \frac{V*{final}}{V_{initial}} \right)^{\frac{1}{t}} - 1$
+\end{quote}
+
+where $V_n$ is the value of the total amount of research published within a calendar year. Intuitively, $V_{final}$ and $V_{initial}$ indicate the values of research in the first year of the dataset and the last year of the dataset, respectively. Lastly, within the Compound Annual Growth Rate, $t$ indicates the total number of years taken into account (in this case, 19). The statistical representations can be viewed below in Table-\ref{tab:h1-table}.
+
+\begin{table}[h]
+\begin{tabular}{@{}lllll@{}}
+\toprule
+STAT & MED~      & CS~          & BUS~ \\ \midrule
+Min  & 101k   & 45k       & 10k \\
+Max  & 337l   & 93k       & 24k \\
+Mean     & 217k,1 & 66k     & 18k \\
+AAGR \%  & 5,22 & 2,90 & 3,06 &  \\
+CAGR \&  & 4,89 & 2,69 & 2,81 &  \\ \bottomrule
+\end{tabular}
+\caption{Statistical analysis of the values referencing Hypothesis 1: The difference in research volume within the Top 100 universities across three different fields}
+\label{tab:h1-table}
+\end{table}
+
+From the table we concur that MED dominates in terms of both volume and growth rates when compared to CS and BUS. This is further proved by Figure-\ref{fig:hypothesis_1b} where there is a visible difference between the total volume of research executed in MED as compared to CS and BUS. On the other side, CS dominates in terms of volume over business related research, however, the growth rate is slightly on the side of BUS, indicating that while BUS might have a lower volume of research all together, the growth rate stays similar to CS, indirectly suggesting that CS encounters frequent fluctuations in its research volume, mainly due to its fast-paced development \& advancements
+
+\begin{figure*}[t]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=\textwidth]{images/H2_FIG01.png}}
+    \caption{\textit{The cumulative value of research executed over the years by different university ranking groups.}}
+    \label{fig:hypothesis_2a}
+\end{figure*}
+
+Regardless, these statistics definitely suggest that there are large differences within the volume or research executed per field of research. As an extra analysis, within Appendix D there are three graphs indicating the difference in research volume between some universities from the Top 100 over the years. The universities chosen are Ranks 1, 10, 25, 50 and 75. This is simply done to demonstrated that different universities prioritize some research fields more than other. A good example would be the volume of research in medicine being larger for the 75th ranked University (Yonsei UNI) as compared to the 1st Rank (MIT). The graphical representation of this difference is presented in Appendix D
+
+\subsection{Results and Analysis: Hypothesis 2}
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{images/H2_FIG02.png}
+    \caption{\textit{Heatmap of the cumulative value of research executed over the years.}}
+    \label{fig:hypothesis_2b}
+\end{figure*}
+
+For the second claim, universities were divided into three groups: ranks 1 to 150, ranks 151 to 300 and ranks 301 to 450. Each search field was analyzed within the ranks and the end result is presented by Figure-\ref{fig:hypothesis_2a} on the following page. Two patterns emerge from this:
+\begin{itemize}
+    \item Universities ranking within the Top 150 perform a significantly more amount of research in all three topics as opposed to universities falling within the lower two groups. This directly proves the hypothesis stated in section 3.
+    \item The amount of research drops linearly as the ranking of the universities drop. This is visible in all three of the research fields.
+\end{itemize}
+
+Another indicator of the total amount of research can be viewed from the Heatmap on Figure-\ref{fig:hypothesis_2b}. For this the universities were further divided into groups of 50, which is a relative number to get a heatmap not extensively detailed and at the same time shows data which accurately portraits the difference in research volume. Immediately upon looking at the heatmap, it is evident that universities ranking in the Top 50 make up the bulk of research papers in the modern days. Note the number of research papers from 2019 has not dropped below 300 thousand yearly within the Top 50.
+
+It is also important to look at the percentage difference between two aspects of the data. Two indicators of change that further prove our hypothesis is:
+\begin{itemize}
+    \item The percentage change for the total number of research papers published by university groups per year.
+    \item The percentage difference within each year that exist
+    between each university group and the Top 50, which is assumed to be the most research-intensive group.
+\end{itemize}
+These two statistics are depicted within Figure-\ref{fig:hypothesis_2cd}. The upper graph indicates the percentage growth/decline rate of the volume of research done by each university group. Note the sharp increase within the years of 2019 to 2022, further emphasizing the impact of COVID on the medical research sector. This graph itself can easily be depicted as indicating that each university group has the same amount of volume of research conducted, hence it is equally important to look at the graph below, showcasing the yearly percentage difference between each individual group and the Top 50.
+\begin{figure*}[t]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/H2_03.png}
+        \caption{Percentage difference between yearly amounts of research per university group}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/H2_04.png}
+        \caption{Percentage difference between each group and the Top 50}
+\end{subfigure}
+\caption{\textit{Comparison of research output disparities across university ranking groups over time.}}
+\label{fig:hypothesis_2cd}
+\end{figure*}
+\begin{table*}[b]
+\begin{tabular}{@{}llllll@{}}
+\toprule
+Topic & Mean       & Min  & Max    & AAGR\%         & CAGR\%         \\ \midrule
+Software Engineering              & 80842,5833 & 9993 & 173131 & 8,8 & 7,9 \\
+Machine Learning \& Discrete Math & 37204,3611 & 3151 & 211917 & 13,4 & 12,1 \\
+Natural Language Processing       & 43316,8056 & 3233 & 174011 & 13,8 & 11,7 \\
+Computer Networks                 & 37194,4167 & 3474 & 72259  & 9,1 & 7,8 \\
+Cloud Computing                   & 53615,6944 & 2598 & 157959 & 12,9 & 12,4 \\
+Security                          & 14077,0833 & 386  & 40291  & 15,2 & 14,2 \\ \bottomrule
+\end{tabular}
+\caption{Statistical values regarding different topics of research over the past 3 decades regarding Computer Science}
+\label{tab:h3_table}
+\end{table*}
+
+The study generally suggests a linear percentage difference between each university group and the Top 50 over the last two decades, proving that the Top 50 constitutes the majority of research volume and has stayed the dominant force for a long time (even further distancing itself from the group 51 to 100 in recent years). One important note to make is that as of writing this paper, the number of recognized papers written in 2025 might change as some may not have been indexed yet, which explains the sudden drop-off in the year 2025.
+
+\subsection{Results and Analysis: Hypothesis 3}
+Hypothesis 3 focuses on the segment of computer science. This required a shift in the data processing of the paper, as we are now taking into account any institution that has published work regarding computer science. This lead to an increase of total paper volume and the ability to understand different topics within CS and how they have been researched. Figure-\ref{fig:hypothesis_3a} is a stream graph representing the cumulative volume of research over the years for different Computer Science topics.
+The data is acquired from OpenAlex's keywords API which allows us to search for keywords within published papers. This made it possible to search for six different topics which have been key in Computer Science over the last few decades. Note that the time period has been extended all the way back to 1990. The topics of interest are:
+\begin{itemize}
+    \item Software Engineering
+    \item Machine Learning and Discrete math
+    \item Neural Networks and NLP
+    \item Computer Networks
+    \item Cloud Computing
+    \item Security
+\end{itemize}
+
+\begin{figure*}[b]
+    \centering
+    \includegraphics[width=\textwidth]{images/H3_FIG01.png}
+    \caption{\textit{Cumulative amount of CS related research over the years with indicated distribution of papers related to specific topics}}
+    \label{fig:hypothesis_3a}
+\end{figure*}
+
+Taking these into account we can analyze Figure 9. The graph suggests a steady growth of research regarding CS with specific spikes roughly around 2004 and 2019. The topics of focus mostly stayed even between the segments, with Software Engineering as a segment being the slightly dominant one. In recent years however, there is a noticeable spike in the volume of research conducted regarding Machine learning, Discrete Math and NLP. The impact of AI and its technological advancements support this concept, with both of these segments making up a large percentage of the total volume of research conducted related to CS.
+
+A tabular representation of each topic and its total volume can be viewed from Table-\ref{tab:h3_table}. Similar to the first figure, the mean, max, min and average growth numbers are calculated. Note the increase in growth for NLP and ML, both having maximum values higher than Software Engineering.
+
+The stream-graph is a nice indicator of the total volume of research, however, Figure-\ref{fig:hypothesis_3b} is more complete for understanding the total distribution percentage wise. In the figure, the 100\% bar chart shows how much of the research per year belongs to each topics. A short glance at the graph depicts a constant percentage regarding software engineering up until 2020, where ML and NLP take a large percentage of the total volume of research. This is to be expected as the emergence of AI has forced research to head into a direction tailored towards Neural Networks, Machine Learning and similar. This does not mean the volume of research conducted regarding the other topics has stagnated. In fact, the total volume of research has experienced an all time high in recent years in all segments, however, the growth of ML and NLP has shadowed all other topics, further emphasizing and approving our initial assumption that AI has taken precedence in research over standard software development.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{images/H3_FIG02.png}
+    \caption{\textit{Displacement of the amount of CS related research over the years based on a 100\% chart}}
+    \label{fig:hypothesis_3b}
+\end{figure*}

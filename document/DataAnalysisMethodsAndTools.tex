@@ -1,0 +1,23 @@
+\section{Data Analysis Methods \& Tools}
+
+The final dataset was structured into three distinct relational database tables, encompassing a total of 822 universities. This specific sample size resulted from mapping disparities between the \textit{Times Higher Education} (THE) rankings and the OpenAlex (OA) institutional identifiers. The following subsections detail the pipeline for data retrieval, storage, and visualization.
+
+\subsection{Data Retrieval and Formatting: Python}
+Python was selected as the primary language for data orchestration due to its robust ecosystem for data science and automation \parencite{van1995python}. This high-level, interpreted language was utilized in two critical phases of the research:
+\begin{itemize}
+    \item \textbf{Automated Data Acquisition:} A custom script was developed to interface with the OpenAlex API. It performed fuzzy matching to reconcile university names from the THE rankings with OA records, ensuring avoidance of duplication and extracting relevant bibliometric metadata directly into the database.
+    \item \textbf{Data Export:} Python was used to perform complex joins on the database, exporting filtered datasets into standardized \texttt{.csv} formats optimized for subsequent mathematical modeling.
+\end{itemize}
+The source code for these operations is provided in Appendix A.
+
+\subsection{Data Storage: PostgreSQL}
+To manage the large volume of bibliometric metadata, PostgreSQL—an advanced, open-source relational database management system (RDBMS)—was employed. PostgreSQL allows for high-performance querying and ensures data integrity through structured relations. While flat-file formats such as \texttt{.xlsx} are suitable for small datasets, an RDBMS was necessary to execute the multi-variable queries required for this study. The schema is organized into three primary tables:
+\begin{itemize}
+    \item \textbf{Institutional Metadata:} Storing ranking and demographic data for universities relevant to $H_{01}$ and $H_{02}$.
+    \item \textbf{Temporal Publication Metrics:} Tracking the annual publication counts per university across the three focus disciplines.
+    \item \textbf{Computer Science Topical Volume:} Recording research density for specific sub-fields within Computer Science to address $H_{03}$.
+\end{itemize}
+The table structures are documented in Appendix B.
+
+\subsection{Data Visualization: MATLAB}
+MATLAB was utilized to generate all graphical representations and perform statistical interpretations of the tabular data. As an industry-standard platform for numerical computing, MATLAB provides the precision required for plotting longitudinal trends and performing regression analysis. Each figure presented in this study is a direct output of MATLAB scripts processing the aforementioned \texttt{.csv} exports. An example code used to graph data can be viewed in Appendix C.

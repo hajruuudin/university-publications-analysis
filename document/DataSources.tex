@@ -1,0 +1,37 @@
+\section{Data Sources}
+
+To address the research questions posed, this study synthesizes data from two primary repositories: OpenAlex for bibliometric metadata and Times Higher Education (THE) for institutional performance metrics.
+
+\subsection{OpenAlex}
+The primary dataset utilized in this study is OpenAlex, a comprehensive, open-source index of the global research ecosystem. OpenAlex aggregates metadata to provide statistical insights into research volume and impact. As a sophisticated platform, it offers several critical functionalities for large-scale analysis:
+\begin{itemize}
+    \item \textbf{Advanced Querying:} Retrieval of research papers through keyword and tag-based indexing.
+    \item \textbf{Granular Filtering:} Categorization of publications by institution, specific topics, individual authors, and funding bodies.
+    \item \textbf{Longitudinal Analysis:} Access to historical data dating back to the 1990s, enabling the observation of long-term trends.
+    \item \textbf{Institutional Benchmarking:} Aggregated statistical overviews of the total recognized research output for specific global institutions.
+\end{itemize}
+
+OpenAlex achieves this functionality by consolidating data from diverse sources, including PubMed, arXiv, and Crossref, into a standardized schema \parencite{openalex2024}. The platform is accessible via a robust Application Programming Interface (API), which facilitates automated data retrieval. A fundamental API request to retrieve scholarly works follows the structure:
+\begin{quote}
+    \texttt{https://api.openalex.org/works}
+\end{quote}
+While OpenAlex provides extensive bibliometric data, it does not inherently include institutional prestige rankings. Consequently, this study supplements the OpenAlex dataset with ranking data from Times Higher Education.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\columnwidth]{images/OPENALEXUI.png}
+    \caption{The OpenAlex User Interface employed for initial data exploration and query validation.}
+    \label{fig:openalex_ui}
+\end{figure}
+
+\subsection{Times Higher Education (THE)}
+Times Higher Education, established in 1971, is a leading authority on global higher education trends and institutional performance. Crucially for this research, THE provides the annual World University Rankings, which categorize institutions based on a multifaceted methodology.
+
+For the purposes of this study, the annual rankings as of early 2026 are utilized. These rankings are determined by a weighted calculation of various performance indicators, including academic reputation, employer reputation, faculty-to-student ratios, citations per faculty, and international outlook \parencite{THE_rankings_2026}. By integrating these rankings with the bibliometric data from OpenAlex, we can correlate institutional prestige with actual research output volume.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\columnwidth]{images/TIMESHIGHERED.png}
+    \caption{The Times Higher Education portal, allowing for the export of institutional ranking data for statistical analysis.}
+    \label{fig:timesHigherEducation_ui}
+\end{figure}

@@ -1,0 +1,98 @@
+\documentclass[11pt, twocolumn]{article}
+
+% --- PACKAGES ---
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{parskip}   % Modern paragraph spacing (no indents)
+\usepackage{authblk}   % For clean author/affiliation formatting
+\usepackage{hyperref}  % For clickable links in the PDF
+\usepackage{cuted}     % Essential for the full-width abstract in 2-column mode
+\usepackage{amsmath}
+\usepackage[style=apa, backend=biber]{biblatex} % Loads the biblatex package
+\usepackage{dblfloatfix}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{longtable}
+\captionsetup{
+  justification=centering,
+  singlelinecheck=false
+}
+\raggedbottom
+\addbibresource{references.bib} % Tells LaTeX where your references are
+
+% --- PREAMBLE DATA ---
+\title{
+    \includegraphics[width=4cm]{images/IBU_LOGO.png} \\[2cm]
+    \Huge \textbf{RESEARCH VOLUME DATA ANALYSIS} \\[0.5cm]
+    \Large \textit{Investigating Trends in the number of research executed by higher-level institutions in distinct fields of science/engineering}
+}
+
+\author{Hajrudin Imamovic, BSc. Information Technology}
+\affil{
+    Department of Information Technology, International BURCH University \\ 
+    Course: IBU510 - Advanced Topics in Database Systems}
+\date{\today}
+
+\begin{document}
+
+% --- 1. FULL PAGE COVER ---
+% We use a singlecolumn environment here to ensure the cover is centered correctly
+\begin{titlepage}
+    \onecolumn
+    \begin{center}
+        \thispagestyle{empty}
+        \maketitle
+        \vfill
+        \large \textbf{Instructor:} Samed Jukic, PhD\\
+        \large \textbf{Date Submitted:} \today
+        \thispagestyle{empty}
+    \end{center}
+\end{titlepage}
+\pagenumbering{arabic}
+
+\newpage
+
+\begin{strip}
+    \begin{center}
+        \section*{Abstract}
+    \end{center}
+    \noindent This study presents a comprehensive data analysis of the volume o research performed by higher-institutions worldwide across different fields of study. It focuses on establishing a connection between the ranking of the institution and the total volume outputted, as well as analyzing the changes and fluctuations of research volume over the past two decades.
+    
+    \vspace{0.5cm}
+    \noindent \textbf{Keywords:} Data Analysis, Higher-institutions, Statistical Modeling, Quantitative research, Research volume, Education
+    \vspace{1cm}
+\end{strip}
+
+% Research Body
+
+\input{Introduction}
+\input{LiteratureReview}
+\input{ResearchQuestions}
+\input{ResearchMethodologies}
+\input{DataSources}
+\input{DataAnalysisMethodsAndTools}
+\input{Results}
+\input{Conclusion}
+
+\onecolumn 
+\printbibliography
+
+\appendix
+
+\clearpage
+\input{appendices/AppendixA}
+
+\clearpage
+\input{appendices/AppendixB}
+
+\clearpage
+\input{appendices/AppendixC}
+
+\clearpage
+\input{appendices/AppendixD}
+
+\end{document}

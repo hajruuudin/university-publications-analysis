@@ -1,0 +1,140 @@
+\section{Python Code}
+Below is the python code utilized to extract data from the OpenAlex API, incorporate it with Times Higher Education rankings and store the data inisde the database. As of writing this paper, the script returns roughly 822 records.
+\begin{small}
+\begin{verbatim}
+import pandas as pd
+import requests
+import psycopg2
+from psycopg2.extras import execute_values
+import time
+
+# Configuration
+DB_PARAMS = {"dbname": "university_publications", "user": "user", "password": "pass", "host": "localhost"}
+MAILTO = "email@gmail.com"
+XLSX_FILE = "THE_2026_RANKINGS.xlsx"
+
+def get_openalex_id(uni_name):
+    """Search OpenAlex for the best matching education institution ID."""
+    url = f"https://api.openalex.org/institutions?search={uni_name}&filter=type:education&mailto={MAILTO}"
+    try:
+        response = requests.get(url).json()
+        if response.get('results'):
+            # Return ONLY the ID string as requested
+            return response['results'][0]['id']
+    except Exception as e:
+        print(f"Error searching {uni_name}: {e}")
+    return None
+
+def main():
+    # Load only up to row 1003 (Rank 1000 + the 3 row offset)
+    # nrows=1000 starting from header=3 gets you exactly to row 1003
+    df = pd.read_excel(XLSX_FILE, skiprows=3, header=None, usecols="A,D,E", nrows=1000)
+    
+    # Clean headers to ensure string type
+    df.columns = [str(c).strip().lower() for c in df.columns]
+
+    conn = psycopg2.connect(**DB_PARAMS)
+    cur = conn.cursor()
+
+    records_dict = {} # Key: open_alex_id, Value: tuple of data
+
+    for _, row in df.iterrows():
+        rank = row.iloc[0] 
+        name = row.iloc[1]
+        
+        if pd.isna(name): continue 
+        
+        oa_id = get_openalex_id(name)
+        
+        if oa_id:
+            if oa_id not in records_dict:
+                group = 'TOP100' if rank <= 100 else ('151TO500' if rank <= 500 else '500BELOW')
+                records_dict[oa_id] = (rank, name, oa_id, group)
+                print(f"Mapped (New): {name} -> {oa_id}")
+            else:
+                print(f"Skipping Duplicate ID: {oa_id} (Found again at {name})")
+        
+        time.sleep(0.05)
+
+    final_records = list(records_dict.values())
+
+    query = """
+    INSERT INTO university_index (the_ranking, uni_name, open_alex_id, ranking_group)
+    VALUES %s ON CONFLICT (open_alex_id) DO NOTHING;
+    """
+    
+    if final_records:
+        execute_values(cur, query, final_records)
+        conn.commit()
+        print(f"Finalized: {len(final_records)} unique universities inserted.")
+
+    cur.close()
+    conn.close()
+
+if __name__ == "__main__":
+    main()
+\end{verbatim}
+\end{small}
+
+Below is the python code utilized to extract the number of publications for each university within each specific category per year. As of writing this paper, the script returns roughly 17000 records.
+\begin{small}
+\begin{verbatim}
+import requests
+import psycopg2
+import time
+
+# Field IDs for OpenAlex
+FIELDS = {
+    'medicine': '27',
+    'computer_science': '17',
+    'business': '14'
+}
+
+DB_PARAMS = {"dbname": "university_publications", "user": "user", "password": "pass", "host": "localhost"}
+
+def fetch_field_counts(oa_id, field_id):
+    """Fetches annual publication counts for a specific field and uni."""
+    url = f"https://api.openalex.org/works?filter=authorships.institutions.id:{oa_id},topics.field.id:{field_id},publication_year:2006-2026&group-by=publication_year&mailto=your_email@example.com"
+    try:
+        response = requests.get(url).json()
+        return {int(item['key']): item['count'] for item in response.get('group_by', [])}
+    except Exception as e:
+        print(f"Error fetching {oa_id} for field {field_id}: {e}")
+        return {}
+
+def main():
+    conn = psycopg2.connect(**DB_PARAMS)
+    cur = conn.cursor()
+
+    cur.execute("SELECT open_alex_id, uni_name FROM university_index")
+    unis = cur.fetchall()
+
+    for oa_id, name in unis:
+        print(f"Processing: {name}...")
+        
+        for field_name, field_id in FIELDS.items():
+            counts = fetch_field_counts(oa_id, field_id)
+            column = f"total_{field_name}_publications"
+            
+            for year, count in counts.items():
+                query = f"""
+                INSERT INTO university_annual_publications (open_alex_id, publication_year, {column})
+                VALUES (%s, %s, %s)
+                ON CONFLICT (open_alex_id, publication_year) 
+                DO UPDATE SET {column} = EXCLUDED.{column};
+                """
+                cur.execute(query, (oa_id, year, count))
+        
+        conn.commit()
+        time.sleep(0.1)
+
+    cur.close()
+    conn.close()
+    print("Data collection complete!")
+
+if __name__ == "__main__":
+    main()
+\end{verbatim}
+\end{small}
+
+The rest of the code and structure of the script used to analyze the data can be found in this papers GitHub repository: https://github.com/hajruuudin/university-publications-analysis

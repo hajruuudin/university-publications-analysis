@@ -16,7 +16,6 @@ def fetch_field_counts(oa_id, field_id):
     url = f"https://api.openalex.org/works?filter=authorships.institutions.id:{oa_id},topics.field.id:{field_id},publication_year:2006-2026&group-by=publication_year&mailto=your_email@example.com"
     try:
         response = requests.get(url).json()
-        # Extract the key (year) and count from the group_by response
         return {int(item['key']): item['count'] for item in response.get('group_by', [])}
     except Exception as e:
         print(f"Error fetching {oa_id} for field {field_id}: {e}")
@@ -26,14 +25,12 @@ def main():
     conn = psycopg2.connect(**DB_PARAMS)
     cur = conn.cursor()
 
-    # Get all 822 mapped universities
     cur.execute("SELECT open_alex_id, uni_name FROM university_index")
     unis = cur.fetchall()
 
     for oa_id, name in unis:
         print(f"Processing: {name}...")
         
-        # We process each field and update the database row
         for field_name, field_id in FIELDS.items():
             counts = fetch_field_counts(oa_id, field_id)
             column = f"total_{field_name}_publications"
@@ -47,8 +44,8 @@ def main():
                 """
                 cur.execute(query, (oa_id, year, count))
         
-        conn.commit() # Commit after each university to save progress
-        time.sleep(0.1) # Be polite to the API
+        conn.commit()
+        time.sleep(0.1)
 
     cur.close()
     conn.close()

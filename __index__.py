@@ -1,1 +1,1 @@
-"""Basic file to get university mapping into the database."""
+"""Basic repository to get university mapping into the database."""

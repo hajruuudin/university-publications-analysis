@@ -1,3 +1,20 @@
+# =========== Computer Science Research Topics Skimmer  ===========
+#
+# This script retrieves the number of research papers regarding each specified
+# computer science related topic within the the frame of 1990 to 2025. The 
+# topics specified below are multi-worded and compund to the total number of volume.
+#
+# For example: Software engieering is anything which has the keyword of
+# "Software Engineering" or "Software". The same idea is done with the other topics.
+# The topic keywords can be changed at will but these were used for the first edition of the paper.
+#
+# Important note: It is possible to have overlap within topics as a paper can be multiple topics
+# at the same time. Its important to take this into account and not use keywords that are vague and cover
+# multilpe things. An example would be using the keyword "Artificial Intelligenge" isntead of "NLP" as
+# that can conver any possible segment of research not only in CS but also in other fields.
+#
+# =========== Computer Science Research Topics Skimmer  ===========
+
 import requests
 import psycopg2
 import time
@@ -13,25 +30,22 @@ SEGMENTS = {
 }
 
 DB_PARAMS = {
-    "dbname": "university_publications", 
-    "user": "hajrudin.imamovic", 
-    "password": "Lndrlh040344", 
-    "host": "localhost"
+    "dbname": "DB_NAME", 
+    "user": "USERNAME", 
+    "password": "PASS", 
+    "host": "HOST"
 }
 
 def fetch_thematic_counts(keywords):
     """Fetches global annual counts for a cluster of keywords from OpenAlex."""
-    # We filter by concepts.display_name and group by year
     url = (
         f"https://api.openalex.org/works?"
         f"filter=title_and_abstract.search:{keywords},publication_year:1990-2025"
         f"&group-by=publication_year"
-        f"&mailto=your_email@example.com"
     )
     try:
         response = requests.get(url).json()
         if 'group_by' in response:
-            # key = year, count = total works
             return {int(item['key']): item['count'] for item in response.get('group_by', [])}
         return {}
     except Exception as e:
@@ -43,18 +57,6 @@ def main():
         conn = psycopg2.connect(**DB_PARAMS)
         cur = conn.cursor()
 
-        # Step 1: Create the table if it doesn't exist
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS cs_thematic_trends (
-                id SERIAL PRIMARY KEY,
-                publication_year INT NOT NULL,
-                segment_name VARCHAR(100) NOT NULL,
-                work_count INT DEFAULT 0,
-                CONSTRAINT uq_year_segment UNIQUE (publication_year, segment_name)
-            );
-        """)
-
-        # Step 2: Fetch and Insert Data
         for name, keywords in SEGMENTS.items():
             print(f"Syncing Segment: {name}...")
             counts = fetch_thematic_counts(keywords)

@@ -5,7 +5,6 @@ close all; clc; clear;
 dataTrends = readtable('h2_uni_range_trends.csv');
 dataHeatmap = readtable('h2_heatmap_data.csv');
 
-% Define our consistent Cyan Palette
 cyanDark  = [0, 0.45, 0.55];  % Tier 1
 cyanMed   = [0, 0.65, 0.75];  % Tier 2
 cyanLight = [0.3, 0.8, 0.8];  % Tier 3
@@ -22,7 +21,7 @@ for i = 1:length(tiers)
 end
 
 figure('Name', 'Research Volume by Tier', 'Color', 'w', 'Units', 'centimeters', 'Position', [1, 1, 20, 15]);
-b = bar(barData', 'FaceColor', 'flat');
+b = bar('barData', 'FaceColor', 'flat');
 
 b(1).FaceColor = cyanDark;  % Tier 1
 b(2).FaceColor = cyanMed;   % Tier 2
